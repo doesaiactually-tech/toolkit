@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="g" cx="82%" cy="4%" r="80%">
+      <stop offset="0%" stop-color="#C9A45C" stop-opacity="0.16"/>
+      <stop offset="60%" stop-color="#12100E" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#100E0C"/>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#F3ECDF">
+    <text x="90" y="150" font-size="26" letter-spacing="6" fill="#C9A45C" font-family="Arial, sans-serif">DOES AI ACTUALLY</text>
+    <text x="86" y="300" font-size="88" font-weight="600" letter-spacing="-2">Does AI actually do</text>
+    <text x="86" y="392" font-size="88" font-weight="600" font-style="italic" letter-spacing="-2" fill="#E4C583">what it promises?</text>
+    <text x="90" y="470" font-size="30" fill="#B0A793" font-family="Arial, sans-serif">Every episode tests one AI promise on a real screen.</text>
+    <text x="90" y="512" font-size="30" fill="#B0A793" font-family="Arial, sans-serif">The verdict stays on the record.</text>
+  </g>
+  <g transform="translate(980,470) rotate(-9)">
+    <circle r="96" fill="#12100E" stroke="#C9A45C" stroke-width="2"/>
+    <circle r="86" fill="none" stroke="#C9A45C" stroke-opacity="0.25"/>
+    <text y="-24" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" letter-spacing="5" fill="#8A8272">ON THE RECORD</text>
+    <text y="14" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="42" fill="#E4C583">Testing</text>
+    <text y="46" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" letter-spacing="4" fill="#B0A793">EP 001</text>
+  </g>
+</svg>

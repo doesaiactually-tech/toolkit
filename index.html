@@ -1,205 +1,389 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Does AI Actually</title>
-<meta name="description" content="Every episode tests one AI promise on a real screen. The verdict stays on the record.">
-<meta name="theme-color" content="#12100C">
+<title>Does AI Actually: AI promises, tested on a real screen</title>
+<meta name="description" content="Every episode tests one AI promise on a real screen recording and ends with a verdict that stays on the record. A tool appears here only after surviving a recorded test.">
+<meta name="theme-color" content="#100E0C">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Does AI Actually: AI promises, tested on a real screen">
+<meta property="og:description" content="Every episode tests one AI promise on a real screen. The verdict stays on the record.">
+<meta property="og:image" content="assets/og-image.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Fonts load non-render-blocking so the page paints instantly on Georgia/system fallbacks (works offline and as a local file), then upgrades to Fraunces + Manrope when available. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@300;400;500;600;700&display=swap"></noscript>
+<script>document.documentElement.className+=' js';</script>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 <style>
-@font-face{font-family:'Fraunces';src:url('fonts/Fraunces.ttf') format('truetype');font-weight:100 900;font-style:normal;font-display:swap}
-@font-face{font-family:'Fraunces';src:url('fonts/FrauncesItalic.ttf') format('truetype');font-weight:100 900;font-style:italic;font-display:swap}
-@font-face{font-family:'Manrope';src:url('fonts/Manrope.ttf') format('truetype');font-weight:200 800;font-style:normal;font-display:swap}
 :root{
-  --bg:#12100C; --bg2:#181410; --bg3:#1E1912;
-  --ink:#F3ECDF; --muted:#B0A793;
-  --gold:#C9A45C; --gold-bright:#E4C583;
-  --line:rgba(243,236,223,.09);
-  --ease:cubic-bezier(.16,1,.3,1);
+  --bg:#100E0C; --bg-2:#15120E; --bg-3:#1A1611;
+  --card:#181410; --card-2:#1E1912;
+  --ink:#F3ECDF; --ink-soft:#B0A793; --ink-mut:#8A8272;
+  --line:rgba(240,230,214,.12); --line-2:rgba(240,230,214,.07);
+  --gold:#C9A45C; --gold-2:#E4C583; --gold-soft:rgba(201,164,92,.13);
+  --shadow:0 34px 80px -40px rgba(0,0,0,.85);
+  --r:14px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:'Manrope',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{font-family:'Manrope',system-ui,sans-serif;font-weight:300;color:var(--ink);background:var(--bg);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,.serif{font-family:'Fraunces',Georgia,serif;font-weight:400;line-height:1.1;letter-spacing:-.4px}
+.wrap{width:min(1120px,90%);margin-inline:auto}
 a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px;border-radius:4px}
+svg{display:block;max-width:100%}
+section{position:relative;z-index:1}
+.eyebrow{font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:600}
+/* Reveals only hide once JS confirms it is running, so content is never trapped invisible without/with-stalled JS. */
+.reveal{transition:opacity .85s ease,transform .85s cubic-bezier(.2,.7,.2,1)}
+.js .reveal{opacity:0;transform:translateY(24px)}
+.js .reveal.in,.reveal.in{opacity:1;transform:none}
 
-/* nav */
-nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:rgba(18,16,12,.72);border-bottom:1px solid var(--line)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:66px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:.01em}
-.mark{width:22px;height:22px;border-radius:6px;background:linear-gradient(145deg,rgba(201,164,92,.28),rgba(201,164,92,.1));border:1px solid rgba(228,197,131,.35);display:grid;place-items:center;flex-shrink:0}
-.nav-links{display:flex;align-items:center;gap:26px;font-size:13.5px;font-weight:600}
-.nav-links a.quiet{color:var(--muted);transition:color .2s var(--ease)}
-.nav-links a.quiet:hover{color:var(--ink)}
-.pill{display:inline-flex;align-items:center;gap:8px;background:var(--gold-bright);color:#15120E;border-radius:999px;padding:9px 18px;font-weight:700;font-size:13.5px;transition:transform .2s var(--ease),background .2s var(--ease);box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
-.pill:hover{background:#EFD49A}
-.pill:active{transform:scale(.98)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:.55em;font-family:'Manrope',sans-serif;font-size:.86rem;letter-spacing:.03em;font-weight:600;padding:15px 28px;border-radius:4px;border:1px solid var(--gold);background:var(--gold);color:#20180B;transition:.3s;cursor:pointer}
+.btn:hover{background:transparent;color:var(--gold-2);transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold-2);background:var(--gold-soft);transform:translateY(-2px)}
+.btn svg{width:17px;height:17px}
+:focus-visible{outline:2px solid var(--gold-2);outline-offset:3px;border-radius:3px}
+
+/* ambient glow */
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(1100px 620px at 82% -8%, rgba(201,164,92,.12), transparent 60%),
+    radial-gradient(900px 700px at -12% 16%, rgba(201,164,92,.05), transparent 60%);}
+
+/* header */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:900;transition:.4s;border-bottom:1px solid transparent}
+.hdr-in{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+.hdr.scrolled{background:rgba(16,14,12,.82);backdrop-filter:blur(14px);border-bottom-color:var(--line-2)}
+.hdr.scrolled .hdr-in{padding:13px 0}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .mk{width:40px;height:40px;border-radius:10px;border:1px solid var(--gold);color:var(--gold-2);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1.18rem;font-weight:500;background:var(--gold-soft);letter-spacing:-.5px}
+.brand .nm{display:flex;flex-direction:column;line-height:1.05}
+.brand .nm b{font-family:'Fraunces',serif;font-weight:500;font-size:1.12rem;letter-spacing:.2px}
+.brand .nm span{font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-mut);margin-top:3px}
+.nav{display:flex;align-items:center;gap:28px}
+.nav a.lnk{font-size:.85rem;letter-spacing:.02em;color:var(--ink-soft);position:relative;transition:.25s}
+.nav a.lnk:hover{color:var(--ink)}
+.nav a.lnk::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--gold);transition:.3s}
+.nav a.lnk:hover::after{width:100%}
+.nav .btn{padding:11px 20px}
+.nav-links{display:flex;align-items:center;gap:28px}
 
 /* hero */
-header{position:relative;overflow:hidden}
-.glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(560px 380px at 74% 42%,rgba(201,164,92,.13),transparent 68%)}
-.hero{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding:96px 0 104px}
-h1{font-family:'Fraunces',serif;font-optical-sizing:auto;font-weight:560;font-size:clamp(34px,3.9vw,52px);line-height:1.14;letter-spacing:-.01em;max-width:19ch}
-h1 em{font-style:italic;color:var(--gold-bright)}
-.sub{color:var(--muted);font-size:16.5px;max-width:44ch;margin:22px 0 30px}
-.cta-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
-.cta-row .quiet-link{color:var(--muted);font-size:14px;font-weight:600;border-bottom:1px solid var(--line);padding-bottom:2px;transition:color .2s var(--ease)}
-.cta-row .quiet-link:hover{color:var(--ink)}
-.frame-wrap{display:flex;flex-direction:column;gap:12px}
-.frame{position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(243,236,223,.12);box-shadow:0 24px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);background:linear-gradient(150deg,#1E1912,#141109 70%);aspect-ratio:16/9}
-.frame img{width:100%;height:100%;object-fit:cover;display:block}
-.frame .fallback{position:absolute;inset:0;display:none;place-items:center;background:radial-gradient(420px 300px at 62% 46%,rgba(201,164,92,.18),transparent 70%),linear-gradient(150deg,#1E1912,#141109)}
-.frame.no-img .fallback{display:grid}
-.frame.no-img img{display:none}
-.frame-cap{color:var(--muted);font-size:12.5px;font-weight:600;letter-spacing:.02em}
-.frame-cap b{color:var(--gold-bright);font-weight:700}
+.hero{padding:184px 0 90px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:60px;align-items:center}
+.hero .tagline{display:inline-flex;align-items:center;gap:11px;margin-bottom:26px;padding:8px 16px;border:1px solid var(--line);border-radius:40px;background:rgba(255,255,255,.02)}
+.hero .tagline .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--gold-soft)}
+.hero .tagline span{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.hero h1{font-size:clamp(2.7rem,6vw,4.6rem);margin-bottom:24px}
+.hero h1 em{font-style:italic;color:var(--gold-2)}
+.hero p.lead{font-size:1.12rem;color:var(--ink-soft);max-width:46ch;font-weight:300}
+.hero p.lead b{color:var(--ink);font-weight:500}
+.hero-cta{display:flex;flex-wrap:wrap;gap:16px;margin-top:36px;align-items:center}
+.hero-note{margin-top:22px;font-size:.82rem;color:var(--ink-mut);display:flex;align-items:center;gap:9px}
+.hero-note svg{width:16px;height:16px;color:var(--gold);flex:none}
 
-/* sections */
-section{padding:100px 0;border-top:1px solid var(--line)}
-.sec-title{font-family:'Fraunces',serif;font-optical-sizing:auto;font-weight:560;font-size:clamp(26px,3vw,34px);letter-spacing:-.008em;line-height:1.2}
-.sec-sub{color:var(--muted);font-size:15.5px;max-width:52ch;margin-top:14px}
+/* hero visual: recorded test frame with verdict stamp */
+.scene{position:relative;height:420px}
+.scene .glow{position:absolute;inset:-30px;z-index:0;background:radial-gradient(closest-side,rgba(201,164,92,.16),transparent);filter:blur(8px)}
+.frame{position:absolute;left:0;top:34px;width:82%;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--card);z-index:2}
+.frame .bar{height:34px;background:linear-gradient(var(--bg-3),var(--bg-2));display:flex;align-items:center;gap:7px;padding:0 14px;border-bottom:1px solid var(--line-2)}
+.frame .bar i{width:9px;height:9px;border-radius:50%;background:rgba(240,230,214,.2)}
+.frame .bar .url{margin-left:10px;height:14px;flex:1;max-width:180px;border-radius:20px;background:rgba(240,230,214,.06)}
+.frame .rec{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:.6rem;letter-spacing:.14em;color:var(--ink-mut);text-transform:uppercase}
+.frame .rec b{width:7px;height:7px;border-radius:50%;background:#d0603f;box-shadow:0 0 0 3px rgba(208,96,63,.2);animation:blink 1.8s ease-in-out infinite}
+@keyframes blink{50%{opacity:.35}}
+.frame .body{padding:22px 22px 26px}
+.frame .ln{height:10px;border-radius:6px;background:rgba(240,230,214,.09);margin-bottom:13px}
+.frame .ln.a{width:70%}.frame .ln.b{width:92%}.frame .ln.c{width:54%}
+.frame .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.frame .tile{height:66px;border-radius:8px;border:1px solid var(--line-2);background:linear-gradient(150deg,rgba(201,164,92,.08),rgba(240,230,214,.02))}
+.stamp{position:absolute;right:-6px;bottom:8px;z-index:4;width:172px;height:172px;border-radius:50%;border:2px solid var(--gold);background:rgba(16,14,12,.86);backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transform:rotate(-9deg);box-shadow:0 20px 50px -20px rgba(0,0,0,.8)}
+.stamp:before{content:"";position:absolute;inset:9px;border:1px solid var(--gold-soft);border-radius:50%}
+.stamp .k{font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-mut)}
+.stamp .v{font-family:'Fraunces',serif;font-style:italic;font-size:1.72rem;color:var(--gold-2);margin:4px 0}
+.stamp .ep{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
 
-/* ledger */
-.ledger{margin-top:44px}
-.row{display:grid;grid-template-columns:76px 1fr auto;gap:20px;align-items:center;padding:22px 12px;border-top:1px solid var(--line);transition:background .2s var(--ease)}
-.row:last-child{border-bottom:1px solid var(--line)}
-.row:hover{background:rgba(243,236,223,.025)}
-.ep{color:var(--muted);font-size:12.5px;font-weight:700;letter-spacing:.08em;font-variant-numeric:tabular-nums}
-.q{font-size:17px;font-weight:600;letter-spacing:-.005em}
-.status{font-size:12px;font-weight:700;letter-spacing:.03em;border-radius:999px;padding:5px 12px;white-space:nowrap}
-.status.live{background:rgba(201,164,92,.16);color:var(--gold-bright);box-shadow:inset 0 0 0 1px rgba(228,197,131,.25)}
-.status.q{background:rgba(243,236,223,.06);color:var(--muted);box-shadow:inset 0 0 0 1px rgba(243,236,223,.08)}
+/* trust strip */
+.strip{border-block:1px solid var(--line-2);background:linear-gradient(var(--bg-2),var(--bg))}
+.strip-in{display:flex;align-items:center;justify-content:center;gap:16px;padding:30px 0;text-align:center;flex-wrap:wrap}
+.strip-in svg{width:20px;height:20px;stroke:var(--gold);flex:none}
+.strip-in p{font-family:'Fraunces',serif;font-size:clamp(1.05rem,2.4vw,1.4rem);color:var(--ink);letter-spacing:-.2px}
 
-/* trust band */
-.band{background:var(--bg2)}
-.band-in{text-align:center;max-width:720px;margin:0 auto}
-.band .sec-title{font-size:clamp(24px,2.8vw,32px)}
-.band p{color:var(--muted);font-size:15.5px;margin-top:16px}
+/* section shell */
+.sec{padding:104px 0}
+.sec-head{max-width:660px;margin-bottom:52px}
+.sec-num{font-family:'Fraunces',serif;font-style:italic;color:var(--gold);font-size:1rem;display:block;margin-bottom:10px}
+.sec-head h2{font-size:clamp(2rem,4.4vw,3.1rem);margin:8px 0 16px}
+.sec-head h2 em{font-style:italic;color:var(--gold-2)}
+.sec-head p{color:var(--ink-soft);font-size:1.02rem}
 
-/* money */
-.money{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start}
-.money p{color:var(--muted);font-size:15.5px}
-.money p+p{margin-top:16px}
-.money b{color:var(--ink);font-weight:700}
+/* verdict ledger */
+.ledger{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:auto 1fr auto;gap:26px;align-items:center;padding:26px 6px;border-bottom:1px solid var(--line);transition:.3s}
+.row:hover{background:rgba(201,164,92,.035);padding-inline:14px}
+.row .ep{font-family:'Fraunces',serif;font-style:italic;font-size:1.15rem;color:var(--gold);min-width:66px}
+.row .q{font-family:'Fraunces',serif;font-size:1.24rem;color:var(--ink);letter-spacing:-.2px;line-height:1.3}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:8px 15px;border-radius:40px;white-space:nowrap}
+.pill i{width:7px;height:7px;border-radius:50%}
+.pill.prod{color:var(--gold-2);background:var(--gold-soft);border:1px solid rgba(201,164,92,.3)}
+.pill.prod i{background:var(--gold-2);animation:blink 1.8s ease-in-out infinite}
+.pill.queued{color:var(--ink-mut);background:rgba(240,230,214,.04);border:1px solid var(--line-2)}
+.pill.queued i{background:var(--ink-mut)}
+.ledger-note{margin-top:26px;font-size:.92rem;color:var(--ink-mut);display:flex;align-items:center;gap:10px}
+.ledger-note svg{width:16px;height:16px;color:var(--gold);flex:none}
+
+/* about / money */
+.about{background:linear-gradient(var(--bg-2),var(--bg))}
+.about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start}
+.about-card{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:30px 30px 24px;box-shadow:var(--shadow)}
+.about-card h3{font-size:1.02rem;font-family:'Manrope',sans-serif;font-weight:600;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.about-card h3 svg{width:18px;height:18px;stroke:var(--gold);flex:none}
+.about-card p{color:var(--ink-soft);font-size:.96rem}
+.about-card+.about-card{margin-top:20px}
+.about-lead{font-family:'Fraunces',serif;font-size:clamp(1.3rem,2.8vw,1.7rem);color:var(--ink);line-height:1.35;letter-spacing:-.3px}
+.about-lead em{font-style:italic;color:var(--gold-2)}
+.about-sub{margin-top:20px;color:var(--ink-soft);font-size:1rem}
 
 /* footer */
-footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:13px}
-footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-footer a{border-bottom:1px solid var(--line);padding-bottom:1px;transition:color .2s var(--ease)}
-footer a:hover{color:var(--ink)}
+.ft{border-top:1px solid var(--line);padding:56px 0 40px}
+.ft-in{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.ft .brand .nm b{font-size:1.05rem}
+.ft-right{display:flex;flex-direction:column;gap:14px;align-items:flex-end;text-align:right}
+.ft-links{display:flex;gap:24px;align-items:center}
+.ft-links a{font-size:.88rem;color:var(--ink-soft);transition:.25s;position:relative}
+.ft-links a:hover{color:var(--gold-2)}
+.ft-mail{font-size:.88rem;color:var(--ink-soft)}
+.ft-mail a{color:var(--gold);border-bottom:1px solid var(--gold-soft);padding-bottom:1px}
+.ft-mail a:hover{color:var(--gold-2)}
+.ft-legal{width:100%;margin-top:34px;padding-top:22px;border-top:1px solid var(--line-2);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--ink-mut)}
 
-/* motion */
-@media (prefers-reduced-motion: no-preference){
-  .has-js .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease);transition-delay:calc(var(--i,0)*70ms)}
-  .has-js .reveal.in{opacity:1;transform:none}
+/* responsive */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:48px}
+  .scene{height:360px;max-width:440px}
+  .about-grid{grid-template-columns:1fr;gap:36px}
+  .nav-links{display:none}
 }
-
-@media (max-width:860px){
-  .hero{grid-template-columns:1fr;gap:40px;padding:64px 0 72px}
-  .nav-links a.quiet{display:none}
-  .money{grid-template-columns:1fr;gap:20px}
-  .row{grid-template-columns:1fr auto;grid-template-areas:"ep status" "q q"}
-  .ep{grid-area:ep}.q{grid-area:q}.status{grid-area:status}
-  section{padding:72px 0}
+@media(max-width:560px){
+  .hero{padding:150px 0 70px}
+  .sec{padding:76px 0}
+  .row{grid-template-columns:auto 1fr;gap:14px 16px}
+  .row .pill{grid-column:2;justify-self:start}
+  .row .ep{min-width:52px;font-size:1rem}
+  .row .q{font-size:1.08rem}
+  .scene{height:330px}
+  .stamp{width:140px;height:140px}
+  .stamp .v{font-size:1.4rem}
+  .ft-in{flex-direction:column}
+  .ft-right{align-items:flex-start;text-align:left}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important}
+  .reveal{transition:none}
+  html{scroll-behavior:auto}
 }
 </style>
 </head>
 <body>
-<nav>
-  <div class="wrap nav-in">
-    <a class="brand" href="#" aria-label="Does AI Actually, home">
-      <span class="mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3.4" stroke="#E4C583" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      Does AI Actually
-    </a>
-    <div class="nav-links">
-      <a class="quiet" href="#verdicts">Verdicts</a>
-      <a class="quiet" href="#about">About</a>
-      <a class="pill" href="https://www.youtube.com/@doesaiactually">Watch on YouTube</a>
-    </div>
-  </div>
-</nav>
 
-<header>
-  <div class="glow" aria-hidden="true"></div>
-  <div class="wrap hero">
-    <div>
-      <h1 class="reveal">Does AI <em>actually</em> do what it promises?</h1>
-      <p class="sub reveal" style="--i:1">Every episode tests one AI promise on a real screen. The verdict stays on the record.</p>
-      <div class="cta-row reveal" style="--i:2">
-        <a class="pill" href="https://www.youtube.com/@doesaiactually">Watch the tests</a>
-        <a class="quiet-link" href="#verdicts">See the verdicts</a>
+<header class="hdr" id="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="#top" aria-label="Does AI Actually, home">
+      <span class="mk">AI?</span>
+      <span class="nm"><b>Does AI Actually</b><span>Promises, tested on screen</span></span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <div class="nav-links">
+        <a class="lnk" href="#verdicts">Verdicts</a>
+        <a class="lnk" href="#about">The money</a>
       </div>
-    </div>
-    <div class="frame-wrap reveal" style="--i:2">
-      <div class="frame" id="heroframe">
-        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_38fabnBVP0v0vBCh7pnm26aByMd/hf_20260715_064034_7c3e87c3-7d7c-4dee-90e7-f1d2ec4ded3e_min.webp" alt="A hand reaching toward a small glowing checkmark above a desk, lit by warm lamp light" loading="eager" onerror="document.getElementById('heroframe').classList.add('no-img')">
-        <div class="fallback" aria-hidden="true"><svg width="46" height="46" viewBox="0 0 46 46" fill="none"><rect x="1" y="1" width="44" height="44" rx="12" stroke="rgba(228,197,131,.4)" stroke-width="1.5"/><path d="M14 24 20.5 30.5 32 17.5" stroke="#E4C583" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-      <span class="frame-cap"><b>Episode 001</b> · in production</span>
-    </div>
+      <a class="btn" href="https://www.youtube.com/@doesaiactually" target="_blank" rel="noopener">
+        Watch the tests
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      </a>
+    </nav>
   </div>
 </header>
 
-<section id="verdicts">
-  <div class="wrap">
-    <h2 class="sec-title reveal">The verdict ledger.</h2>
-    <p class="sec-sub reveal" style="--i:1">A tool appears here only after surviving a recorded test. Links follow when a tool earns them.</p>
-    <div class="ledger">
-      <div class="row reveal" style="--i:1">
-        <span class="ep">EP 001</span>
-        <span class="q">Does AI actually replace your paid apps? I tested 7 free tools</span>
-        <span class="status live">In production</span>
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="tagline reveal"><span class="dot"></span><span>One promise. One recorded test. One verdict.</span></div>
+        <h1 class="reveal">Does AI actually do <em>what it promises?</em></h1>
+        <p class="lead reveal">Every episode tests one AI promise on a real screen. <b>The verdict stays on the record.</b></p>
+        <div class="hero-cta reveal">
+          <a class="btn" href="https://www.youtube.com/@doesaiactually" target="_blank" rel="noopener">
+            Watch the tests
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 4 14 8-14 8z" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a class="btn ghost" href="#verdicts">See the verdicts</a>
+        </div>
+        <p class="hero-note reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          No demos on trust. Every claim is recorded on camera.
+        </p>
       </div>
-      <div class="row reveal" style="--i:2">
-        <span class="ep">EP 002</span>
-        <span class="q">Does AI actually edit video for free?</span>
-        <span class="status q">Queued</span>
-      </div>
-      <div class="row reveal" style="--i:3">
-        <span class="ep">EP 003</span>
-        <span class="q">Does AI actually save students time?</span>
-        <span class="status q">Queued</span>
+
+      <div class="scene reveal" aria-hidden="true">
+        <div class="glow"></div>
+        <div class="frame">
+          <div class="bar">
+            <i></i><i></i><i></i>
+            <span class="url"></span>
+            <span class="rec"><b></b>Rec</span>
+          </div>
+          <div class="body">
+            <div class="ln a"></div>
+            <div class="ln b"></div>
+            <div class="ln c"></div>
+            <div class="grid2"><div class="tile"></div><div class="tile"></div></div>
+          </div>
+        </div>
+        <div class="stamp">
+          <span class="k">On the record</span>
+          <span class="v">Testing</span>
+          <span class="ep">EP 001</span>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="band">
-  <div class="wrap band-in">
-    <h2 class="sec-title reveal">Every tool is tested on camera. Failures stay published.</h2>
-    <p class="reveal" style="--i:1">No sponsored verdicts, no staged demos. What you see is the real session, including the parts that break.</p>
-  </div>
-</section>
-
-<section id="about">
-  <div class="wrap money">
-    <h2 class="sec-title reveal">Where the money comes from</h2>
-    <div>
-      <p class="reveal" style="--i:1">Some links on this site may become affiliate redirects. If you buy a tool through one, I may earn a commission at no extra cost to you. <b>That never changes a verdict.</b> Tools are recommended only when they pass, and failed tools stay failed no matter who pays.</p>
-      <p class="reveal" style="--i:2">The narration uses an AI-assisted voice. Every demo is a real screen recording of the tool doing the task, or failing to.</p>
+  <!-- TRUST STRIP -->
+  <section class="strip">
+    <div class="wrap strip-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
+      <p>Every tool is tested on camera. Failures stay published.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer>
+  <!-- VERDICT LEDGER -->
+  <section class="sec" id="verdicts">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-num">The ledger</span>
+        <h2>Verdicts, kept <em>on the record</em></h2>
+        <p>A tool appears here only after surviving a recorded test. Nothing is added on a press release or a promise.</p>
+      </div>
+
+      <div class="ledger">
+        <div class="row reveal">
+          <span class="ep">EP 001</span>
+          <span class="q">Does AI actually replace your paid apps? I tested 7 free tools</span>
+          <span class="pill prod"><i></i>In production</span>
+        </div>
+        <div class="row reveal">
+          <span class="ep">EP 002</span>
+          <span class="q">Does AI actually edit video for free?</span>
+          <span class="pill queued"><i></i>Queued</span>
+        </div>
+        <div class="row reveal">
+          <span class="ep">EP 003</span>
+          <span class="q">Does AI actually save students time?</span>
+          <span class="pill queued"><i></i>Queued</span>
+        </div>
+      </div>
+
+      <p class="ledger-note reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        A tool appears here only after surviving a recorded test.
+      </p>
+    </div>
+  </section>
+
+  <!-- MONEY TRANSPARENCY -->
+  <section class="sec about" id="about">
+    <div class="wrap about-grid">
+      <div class="sec-head reveal" style="margin-bottom:0">
+        <span class="sec-num">The money</span>
+        <h2>How this <em>stays honest</em></h2>
+        <p>Where any money comes from, in plain terms. No asterisks.</p>
+      </div>
+
+      <div class="reveal">
+        <p class="about-lead">A verdict is never for sale. <em>Tools are recommended only when they pass, and failed tools stay failed no matter who pays.</em></p>
+
+        <div class="about-card" style="margin-top:26px">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
+            Affiliate links
+          </h3>
+          <p>Some links on this site may become affiliate redirects. If you buy a tool through one, I may earn a commission at no extra cost to you. That never changes a verdict.</p>
+        </div>
+
+        <div class="about-card">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg>
+            How it is made
+          </h3>
+          <p>The narration uses an AI-assisted voice. Every demo is a real screen recording. Nothing you watch is a mockup of a result.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="ft">
   <div class="wrap">
-    <span>Contact: doesaiactually@gmail.com</span>
-    <a href="privacy.html">Privacy policy</a>
+    <div class="ft-in">
+      <a class="brand" href="#top" aria-label="Does AI Actually, home">
+        <span class="mk">AI?</span>
+        <span class="nm"><b>Does AI Actually</b><span>The verdict stays on the record</span></span>
+      </a>
+      <div class="ft-right">
+        <div class="ft-links">
+          <a href="#verdicts">Verdicts</a>
+          <a href="#about">The money</a>
+          <a href="https://www.youtube.com/@doesaiactually" target="_blank" rel="noopener">YouTube</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+        <p class="ft-mail">Contact <a href="mailto:doesaiactually@gmail.com">doesaiactually@gmail.com</a></p>
+      </div>
+    </div>
+    <div class="ft-legal">
+      <span>&copy; 2026 Does AI Actually. Every tool is tested on camera. Failures stay published.</span>
+      <span>No trackers. No cookies.</span>
+    </div>
   </div>
 </footer>
 
 <script>
-document.documentElement.classList.add('has-js');
-document.body.classList.add('has-js');
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const io = new IntersectionObserver((es) => {
-    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: .15 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-} else {
-  document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
-}
+(function(){
+  var hdr=document.getElementById('hdr');
+  var onScroll=function(){ hdr.classList.toggle('scrolled', window.scrollY>12); };
+  onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+
+  var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var items=document.querySelectorAll('.reveal');
+  if(reduce||!('IntersectionObserver' in window)){
+    items.forEach(function(el){el.classList.add('in');});
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+  items.forEach(function(el,i){ el.style.transitionDelay=(Math.min(i,6)*70)+'ms'; io.observe(el); });
+
+  // Fail-safe: if the observer has not revealed anything shortly after load
+  // (unsupported, errored, or a stalled renderer), show everything.
+  setTimeout(function(){
+    if(document.querySelectorAll('.reveal.in').length===0){
+      items.forEach(function(el){ el.classList.add('in'); });
+    }
+  },1200);
+})();
 </script>
 </body>
 </html>
